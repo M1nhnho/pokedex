@@ -29,11 +29,12 @@ const PokemonInfo = ({ pokemonSearch }) =>
     const [isLoading, setIsLoading] = useState(true);
     const [isNormalFront, setIsNormalFront] = useState(true);
     const [isShinyFront, setIsShinyFront] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() =>
     {
         setIsLoading(true);
-        console.log('useEffect triggered');
+        setErrorMessage('')
         fetchPokemonData(pokemonSearch)
             .then((pokemonData) =>
             {
@@ -99,7 +100,7 @@ const PokemonInfo = ({ pokemonSearch }) =>
             })
             .catch((error) =>
             {
-                console.log(error);
+                setErrorMessage(`Could not find "${pokemonSearch}"...`)
             });
     }, [pokemonSearch]);
 
@@ -110,7 +111,10 @@ const PokemonInfo = ({ pokemonSearch }) =>
     };
 
     return isLoading ? (
-        <div className="loading"></div>
+        <>
+            <div className="loading"></div>
+            <p>{errorMessage}</p>
+        </>
     ) : (
         <Expander heading="INFO" initialShowing={true}>
             <section className="pokemon-info grid-background">

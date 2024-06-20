@@ -8,7 +8,8 @@ const pokemonAPI = axios.create(
 
 export const fetchPokemonData = (pokemonName) =>
 {
-    return pokemonAPI.get(`pokemon/${pokemonName}`)
+    const pokemon = pokemonName.toLowerCase() === 'mimikyu' ? 'mimikyu-disguised' : pokemonName.toLowerCase();
+    return pokemonAPI.get(`pokemon/${pokemon}`)
         .then((response) =>
         {
             return response.data;

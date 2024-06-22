@@ -3,6 +3,7 @@ import { fetchPokemonData } from "../utils/app.js";
 import { typeColours } from "../utils/typeColours.js";
 import Expander from "./Expander.jsx";
 import MoveList from "./MoveList.jsx";
+import Loader from "./Loader.jsx";
 import { Radar } from 'react-chartjs-2';
 import
 {
@@ -100,7 +101,7 @@ const PokemonInfo = ({ pokemonSearch }) =>
             })
             .catch((error) =>
             {
-                setErrorMessage(`Could not find "${pokemonSearch}"...`)
+                setErrorMessage(['Could not find', <br />, `"${pokemonSearch}"`])
             });
     }, [pokemonSearch]);
 
@@ -111,10 +112,7 @@ const PokemonInfo = ({ pokemonSearch }) =>
     };
 
     return isLoading ? (
-        <>
-            <div className="loading"></div>
-            <p>{errorMessage}</p>
-        </>
+        <Loader errorMessage={errorMessage} />
     ) : (
         <Expander heading="INFO" initialShowing={true}>
             <section className="pokemon-info grid-background">
